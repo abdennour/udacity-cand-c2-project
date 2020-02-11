@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  base: &base
+    image: alpine:3.11
+    volumes:
+    - .:/infra
+    - ${HOME}/.aws:/root/.aws
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    working_dir: /infra
+    restart: 'no'
+    tty: true
+    environment:
+      AWS_PROFILE: ${AWS_PROFILE}
+      AWS_DEFAULT_REGION: ${AWS_REGION}
+      AWS_REGION: ${AWS_REGION}
+
+  terraform:
+    <<: *base
+    image: hashicorp/terraform:${TERRAFORM_VERSION}
+    working_dir: /infra/cluster-core
+
+  aws:
+    <<: *base
+    image: abdennour/aws:${AWS_CLI_VERSION}
+    entrypoint: aws
