@@ -2,6 +2,17 @@
 
 ---
 
+## Prerequisites:
+
+- Docker 18.9 or later
+- Docker-compose 1.23 or later
+
+## Getting Started
+
+**Check AWS CLI** `docker-compose run --rm aws --version`
+**Check Terraform CLI** `docker-compose run --rm terraform version`
+
+
 ## Project  Instructions
 
 ### Exercise 1
