@@ -42,6 +42,19 @@ docker-compose -f docker-compose.yaml -f docker-compose.exercise2.yaml run --rm 
 docker-compose -f docker-compose.yaml -f docker-compose.exercise2.yaml run --rm terraform apply -auto-approve
 ```
 
+**Validate**
+
+```sh
+# Invoke the deployed function
+docker-compose run --rm \
+  aws lambda invoke \
+    --invocation-type RequestResponse \
+    --function-name greet_lambda  \
+    --log-type Tail  outputfile.txt | jq .LogResult | sed 's/"//g' | base64 --decode
+
+# Show output
+docker-compose -f docker-compose.yaml -f docker-compose.exercise2.yaml run --rm terraform output arn
+```
 
 ## Project  Instructions
 
