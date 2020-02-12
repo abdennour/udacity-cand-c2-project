@@ -8,13 +8,18 @@ data "archive_file" "lambda_zip_file_greeting" {
 }
 
 resource "aws_lambda_function" "lambda_file_greeting" {
-  filename         = "${data.archive_file.lambda_zip_file_greeting.output_path}"
-  source_code_hash = "${data.archive_file.lambda_zip_file_greeting.output_base64sha256}"
+  filename         = data.archive_file.lambda_zip_file_greeting.output_path
+  source_code_hash = data.archive_file.lambda_zip_file_greeting.output_base64sha256
 	function_name = "greet_lambda"
-  role = "${aws_iam_role.lambda_exec_role.arn}"
+  role = aws_iam_role.lambda_exec_role.arn
   description = "Python Lambda Function Saying Greetings"
   handler = "greet_lambda.lambda_handler"
   runtime = "python3.7"
+  environment {
+    variables = {
+      greeting = "Hello"
+    }
+  }
 }
 
 resource "aws_iam_role" "lambda_exec_role" {
