@@ -10,17 +10,32 @@ services:
     working_dir: /infra
     restart: 'no'
     tty: true
-    environment:
-      AWS_PROFILE: ${AWS_PROFILE}
-      AWS_DEFAULT_REGION: ${AWS_REGION}
-      AWS_REGION: ${AWS_REGION}
 
   terraform:
     <<: *base
     image: hashicorp/terraform:${TERRAFORM_VERSION}
-    working_dir: /infra/cluster-core
-
+    working_dir: /infra
+    environment:
+      TF_VAR_aws_profile: ${AWS_PROFILE}
+      TF_VAR_region: ${AWS_REGION}
+      AWS_DEFAULT_REGION: ${AWS_REGION}
+      AWS_REGION: ${AWS_REGION}
+      AWS_PROFILE: ${AWS_PROFILE}
+      # TF_LOG: TRACE
   aws:
     <<: *base
     image: abdennour/aws:${AWS_CLI_VERSION}
     entrypoint: aws
+    environment:
+      AWS_PROFILE: ${AWS_PROFILE}
+      AWS_DEFAULT_REGION: ${AWS_REGION}
+      AWS_REGION: ${AWS_REGION}
+  
+  aws-configure:
+    <<: *base
+    image: abdennour/aws:${AWS_CLI_VERSION}
+    entrypoint: /bin/sh
+    command: -c 'aws configure --profile ${AWS_PROFILE}'
+    environment:
+      AWS_DEFAULT_REGION: ${AWS_REGION}
+      AWS_REGION: ${AWS_REGION}

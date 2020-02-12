@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  base:
+    working_dir: /infra/Exercise_2
+
+  terraform:
+    working_dir: /infra/Exercise_2
