@@ -5,6 +5,8 @@ data "archive_file" "lambda_zip_file_greeting" {
     content  = file("greet_lambda.py")
     filename = "greet_lambda.py"
   }
+  # in case of many .py files, zip their whole directory 
+  # and use "source_dir" instead of "source". e.g: source_dir="Exercise_2", output_path = "/tmp/....zip"
 }
 
 resource "aws_lambda_function" "lambda_file_greeting" {
