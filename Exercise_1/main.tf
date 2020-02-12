@@ -37,12 +37,12 @@ resource "aws_instance" "udacity_t2" {
 
 # TODO: provision 2 m4.large EC2 instances named Udacity M4
 
-# resource "aws_instance" "udacity_m4" {
-#   count = 2
-#   ami           = local.ami_amz_linux2
-#   instance_type = "m4.large"
-#   tags = {
-#     Name = "Udacity M4"
-#   }
-# }
+resource "aws_instance" "udacity_m4" {
+  count = 2
+  ami           = local.ami_amz_linux2
+  instance_type = "m4.large"
+  tags = {
+    Name = "Udacity M4"
+  }
+}
 
